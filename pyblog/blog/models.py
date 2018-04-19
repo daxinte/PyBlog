@@ -9,6 +9,9 @@ class Article(models.Model):
     body = models.TextField()
     pub_date = models.DateTimeField()
 
+    def approved_comments(self):
+        return self.comment.filter(approved_comment=True)
+
 
 class Comment(models.Model):
     article = models.ForeignKey(Article)
@@ -16,4 +19,13 @@ class Comment(models.Model):
     author_email = models.EmailField()
     content = models.TextField()
     is_published = models.BooleanField(default=True)
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+
+
+
+    
     
