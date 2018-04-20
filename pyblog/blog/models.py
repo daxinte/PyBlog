@@ -4,13 +4,12 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
+
 class Article(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
     pub_date = models.DateTimeField()
 
-    def approved_comments(self):
-        return self.comment.filter(approved_comment=True)
 
 
 class Comment(models.Model):
@@ -19,11 +18,6 @@ class Comment(models.Model):
     author_email = models.EmailField()
     content = models.TextField()
     is_published = models.BooleanField(default=True)
-
-    def approve(self):
-        self.approved_comment = True
-        self.save()
-
 
 
 

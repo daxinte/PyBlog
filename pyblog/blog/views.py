@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.views.generic.list import ListView
-from django.shortcuts import render, redirect
-from django.shortcuts import get_list_or_404, get_object_or_404
-from .models import Article
+from django.shortcuts import render, reverse, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django import forms
 from .forms import CommentForm
+from .models import Article
 
 # Create your views here.
 
@@ -15,6 +16,7 @@ def detail(request, article_id):
         "article": get_object_or_404(Article, id=article_id)
     }
     return render(request, details, context)
+
 
 
 class IndexView(ListView):
@@ -31,18 +33,9 @@ def add_comment_to_article(request, pk):
             comment = form.save(commit=False)
             comment.article = article
             comment.save()
-            return redirect('detail', pk=article.pk)
+            messages.success(request, 'Your comment was saved')
+            url = reverse('detail', kwargs={'article_id': pk})
+            return HttpResponseRedirect(url)
     else:
         form = CommentForm()
     return render(request, 'blog/add_comment_to_article.html', {'form': form})
-
-
-def comment_approve(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    comment.approve()
-    return redirect('view.detail', pk=article.pk)
-
-def comment_remove(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    comment.delete()
-    return redirect('view.detail', pk=article.pk)

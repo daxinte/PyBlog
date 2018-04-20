@@ -1,23 +1,22 @@
+{% if messages %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+{% endif %}
+
+
 <h1>{{ article.title }}</h1>
 <p>{{ article.body }}</p>
 <p>{{ article.pub_date }}</p>
 
 <a href="{% url 'add_comment_to_article' pk=article.pk %}">Add comment</a>
 
-
 {% for comment in article.comments.all %}
-    {% if comment.approved_comment %}
     <div class="comment">
-        <div class="date">
-            {% if not comment.approved_comment %}
-                <a  href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-                <a  href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
-            {% endif %}
-        </div>
+        
         <strong>{{ comment.author_name }}</strong>
         <p>{{ comment.content|linebreaks }}</p>
     </div>
-    {% endif %}
-{% empty %}
-    <p>No comments here yet :(</p>
+{% empty %} 
+    <p>No comments here yet</p>
 {% endfor %}
