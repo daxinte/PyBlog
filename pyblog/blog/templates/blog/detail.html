@@ -11,10 +11,9 @@
 
 <a href="{% url 'add_comment_to_article' pk=article.pk %}">Add comment</a>
 
-{% for comment in article.comments.all %}
-    <div class="comment">
-        
-        <strong>{{ comment.author_name }}</strong>
+{% for comment in article.comment_set.all %}
+    <div>
+        <strong>{{ comment.pub_date }} {{ comment.author_name }}</strong>
         <p>{{ comment.content|linebreaks }}</p>
     </div>
 {% empty %} 

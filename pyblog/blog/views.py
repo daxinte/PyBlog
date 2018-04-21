@@ -4,6 +4,7 @@ from django.views.generic.list import ListView
 from django.shortcuts import render, reverse, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.views import generic
 from django import forms
 from .forms import CommentForm
 from .models import Article
@@ -39,3 +40,8 @@ def add_comment_to_article(request, pk):
     else:
         form = CommentForm()
     return render(request, 'blog/add_comment_to_article.html', {'form': form})
+
+
+class ResultsView(generic.DetailView):
+    model = Article
+    template_name = 'blog/detail.html'

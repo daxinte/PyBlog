@@ -22,6 +22,7 @@ class Comment(models.Model):
     author_email = models.EmailField()
     content = models.TextField()
     is_published = models.BooleanField(default=True)
+    pub_date = models.DateTimeField()
 
 
     def __str__(self):
