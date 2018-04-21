@@ -11,6 +11,10 @@ class Article(models.Model):
     pub_date = models.DateTimeField()
 
 
+    def __str__(self):
+        return self.title
+
+
 
 class Comment(models.Model):
     article = models.ForeignKey(Article)
@@ -19,6 +23,9 @@ class Comment(models.Model):
     content = models.TextField()
     is_published = models.BooleanField(default=True)
 
+
+    def __str__(self):
+        return self.author_name
 
 
     
