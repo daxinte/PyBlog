@@ -10,6 +10,9 @@
 <p>{{ article.pub_date }}</p>
 
 <a href="{% url 'add_comment_to_article' pk=article.pk %}">Add comment</a>
+<br />
+<br />
+
 
 {% for comment in article.comment_set.all %}
     <div>
