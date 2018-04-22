@@ -8,7 +8,7 @@ from django.views import generic
 from django import forms
 from .forms import CommentForm
 from .models import Article
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 def detail(request, article_id):
@@ -32,13 +32,29 @@ def detail(request, article_id):
 
 
 
-class IndexView(ListView):
-    model = Article
-
-index = IndexView.as_view()
-
+# class IndexView(ListView):
+#     model = Article
+# index = IndexView.as_view()
+    
 
 
 class ResultsView(generic.DetailView):
     model = Article
     template_name = 'blog/detail.html'
+
+
+def index(request):
+    article_list = Article.objects.all()
+    paginator = Paginator(article_list, 2) # Show 2 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        articles = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        articles = paginator.page(paginator.num_pages)
+
+    return render(request, 'blog/article_list.html', {'articles': articles})
