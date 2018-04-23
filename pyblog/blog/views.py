@@ -14,7 +14,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def detail(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     form = CommentForm()
-    if request.method == "POST" and request.GET:
+    if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -22,6 +22,7 @@ def detail(request, article_id):
             comment.save()
             messages.success(request, 'Your comment was saved')
             url = reverse('detail', kwargs={'article_id': article_id})
+            
             return HttpResponseRedirect(url)
     details = "blog/detail.html"
     context = {

@@ -16,15 +16,17 @@
 </form>
 <br />
 <br />
-{% if comment.is_published %}
         {% for comment in article.comment_set.all %}
+{% if comment.is_published%}
+        
             <div>
                 <strong>{{ comment.pub_date }} {{ comment.author_name }}</strong>
                 <p>{{ comment.content|linebreaks }}</p>
             </div>
-        {% endfor %}
-    {% else %}
+            {% else %}
         <p>No comments here yet</p>
 {% endif %}
+        {% endfor %}
+    
         
 

@@ -46,6 +46,9 @@ class Comment(models.Model):
         return self.author_name
 
 
+    def ordered_comments(self):
+        return Comment.objects.order_by('-pub_date')
+
 
 class Author(models.Model):
     name = models.CharField(max_length=200)
