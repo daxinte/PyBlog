@@ -13,6 +13,8 @@ class CommentInline(admin.StackedInline):
 
 
 
+
+
 class   ArticleAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,               {'fields': ['title']}),
@@ -20,8 +22,17 @@ class   ArticleAdmin(admin.ModelAdmin):
     ]
     inlines = [CommentInline]
 
-    list_display = ('title', 'pub_date', 'was_published_recently')
+    list_display = ('title', 'pub_date', 'was_published_recently', 'status')
+    actions = ['make_published']
 
+
+    def make_published(self, request, queryset):
+            rows_updated = queryset.update(status='p')
+            if rows_updated == 1:
+                message_bit = "1 story was"
+            else:
+                message_bit = "%s stories were" % rows_updated
+            self.message_user(request, "%s successfully marked as published." % message_bit)
 
 
 admin.site.register(Article, ArticleAdmin)

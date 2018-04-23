@@ -44,7 +44,7 @@ class ResultsView(generic.DetailView):
 
 
 def index(request):
-    article_list = Article.objects.all()
+    article_list = Article.objects.filter(status='p')
     paginator = Paginator(article_list, 2) # Show 2 contacts per page
 
     page = request.GET.get('page')
