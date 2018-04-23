@@ -7,11 +7,10 @@ from django.contrib import admin
 from .models import Article, Comment
 
 
+
 class CommentInline(admin.StackedInline):
     model = Comment
     extra = 3
-
-
 
 
 
@@ -22,8 +21,14 @@ class   ArticleAdmin(admin.ModelAdmin):
     ]
     inlines = [CommentInline]
 
-    list_display = ('title', 'pub_date', 'was_published_recently', 'status')
+    list_display = ('title', 'pub_date', 'was_published_recently', 'status', 'author')
     actions = ['make_published']
+
+
+    def save_model(self, request, obj, form, change):
+        if getattr(obj, 'author', None) is None:
+            obj.author = request.user
+        obj.save()
 
 
     def make_published(self, request, queryset):

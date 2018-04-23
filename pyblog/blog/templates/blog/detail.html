@@ -6,6 +6,7 @@
 
 
 <h1>{{ article.title }}</h1>
+<p>{{ article.author }}</p>
 <p>{{ article.body }}</p>
 <p>{{ article.pub_date }}</p>
 
@@ -15,14 +16,15 @@
 </form>
 <br />
 <br />
-
-
-{% for comment in article.comment_set.all %}
-    <div>
-        <strong>{{ comment.pub_date }} {{ comment.author_name }}</strong>
-        <p>{{ comment.content|linebreaks }}</p>
-    </div>
-{% empty %} 
-    <p>No comments here yet</p>
-{% endfor %}
+{% if comment.is_published %}
+        {% for comment in article.comment_set.all %}
+            <div>
+                <strong>{{ comment.pub_date }} {{ comment.author_name }}</strong>
+                <p>{{ comment.content|linebreaks }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No comments here yet</p>
+{% endif %}
+        
 

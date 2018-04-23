@@ -15,6 +15,7 @@ STATUS_CHOICES = (
 
 
 class Article(models.Model):
+    author = models.ForeignKey(User, null=True, blank=True)
     title = models.CharField(max_length=255)
     body = models.TextField()
     pub_date = models.DateTimeField('date published')
@@ -29,20 +30,6 @@ class Article(models.Model):
         if not ref_point:
             ref_point = timezone.now()
         return ref_point - datetime.timedelta(days=1) <= self.pub_date <= ref_point
-
-
-    # def get_absolute_url(self):
-    #     if self.status == 'p'
-    #         return "/article/%i/" % self.id
-    #     else:
-    #         return "/preview/article/%i/" % self.id
-
-    # @models.permalink
-    # def get_absolute_url(self):
-    #     if self.status == 'p'
-    #         return ('post.views.details', [str(self.id)])
-    #     else:
-    #         return ('post.views.preview', [str(self.id)])
 
 
 

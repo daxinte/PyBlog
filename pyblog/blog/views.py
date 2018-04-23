@@ -14,7 +14,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def detail(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     form = CommentForm()
-    if request.method == "POST":
+    if request.method == "POST" and request.GET:
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
