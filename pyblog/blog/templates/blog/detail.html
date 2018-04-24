@@ -1,32 +1,75 @@
-{% if messages %}
-    {% for message in messages %}
-        {{ message }}
-    {% endfor %}
-{% endif %}
+            <!doctype html>
+            <html lang="en">
+              <head>
+                <!-- Required meta tags -->
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+                <!-- Bootstrap CSS -->
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<h1>{{ article.title }}</h1>
-<p>{{ article.author }}</p>
-<p>{{ article.body }}</p>
-<p>{{ article.pub_date }}</p>
+                <title>Article details</title>
+              </head>
+              <body>
+                <div class="container">
+                  <div class="row">
+                    
+                        {% if messages %}
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        {% endif %}
+                  </div>
+                   <section>
+                       
+                         <article>
+                            <h1>{{ article.title }}</h1>
+                               <div>
+                                    <p><bold>{{ article.author }}</bold></p>
+                                    <p>{{ article.body }}</p>
+                                    <p><em>{{ article.pub_date }}</em></p>
+                               </div>
+                        </article>
 
-<form method="POST" >{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Send</button>
-</form>
-<br />
-<br />
-        {% for comment in article.comment_set.all %}
-{% if comment.is_published%}
-        
-            <div>
-                <strong>{{ comment.pub_date }} {{ comment.author_name }}</strong>
-                <p>{{ comment.content|linebreaks }}</p>
-            </div>
-            {% else %}
-        <p>No comments here yet</p>
-{% endif %}
-        {% endfor %}
-    
-        
+                   </section>
+                   <section>
+                       
+                       <article>
+                        <h3>Comentariu</h3>
+                                    
+                            <form class="form" method="POST" >
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ form.as_p }}
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </article>
+                    <br />
+                    <br />
+                    <article>
+                        {% for comment in article.comment_set.all %}
+                                {% if comment.is_published%}
+                                    <div>
+                                        <strong>{{ comment.pub_date }} {{ comment.author_name }}</strong>
+                                        <p>{{ comment.content|linebreaks }}</p>
+                                    </div>
+                                {% else %}
+                                    <p>No comments here yet</p>
+                                {% endif %}
+                        {% endfor %}
+                    </article>
+
+                   </section>
+                    
+                    </div>
+                  </div>
+                <!-- Optional JavaScript -->
+                <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+              </body>
+            </html>
+            
 
